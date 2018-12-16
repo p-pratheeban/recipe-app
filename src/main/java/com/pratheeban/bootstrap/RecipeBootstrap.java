@@ -21,6 +21,9 @@ import com.pratheeban.repositories.CategoryRepository;
 import com.pratheeban.repositories.RecipeRepository;
 import com.pratheeban.repositories.UnitOfMeasureRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Component
 public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEvent> {
 
@@ -42,6 +45,7 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
 	}
 
 	private List<Recipe> getRecipes() {
+        log.debug("Loading bootstrap data");
 		List<Recipe> recipes = new ArrayList<>(2);
 
 		// get UOMs
