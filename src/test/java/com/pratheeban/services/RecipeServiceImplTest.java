@@ -16,6 +16,7 @@ import com.pratheeban.commands.RecipeCommand;
 import com.pratheeban.converters.RecipeCommandToRecipe;
 import com.pratheeban.converters.RecipeToRecipeCommand;
 import com.pratheeban.domain.Recipe;
+import com.pratheeban.exceptions.NotFoundException;
 import com.pratheeban.repositories.RecipeRepository;
 
 public class RecipeServiceImplTest {
@@ -49,6 +50,15 @@ public class RecipeServiceImplTest {
 		assertNotNull("Null recipe returned", recipeReturned);
 		verify(recipeRepository, times(1)).findById(anyLong());
 		verify(recipeRepository, never()).findAll();
+	}
+	
+	@Test(expected = NotFoundException.class)
+	public void findByIdTestNotFound() throws Exception {
+		Optional<Recipe> recipeOptional = Optional.empty();
+
+		when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+
+		recipeService.findById(1L);
 	}
 
 	@Test
